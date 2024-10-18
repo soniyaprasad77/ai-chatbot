@@ -107,12 +107,7 @@ function ChatbotInterface() {
                       <h3 className='font-semibold'>Result</h3>
                       <ReactMarkdown>{result}</ReactMarkdown>
                     </div>
-                    {result && (
-                      <div className='text-red-500'>
-                        <h3 className='font-semibold'>Error</h3>
-                        <p>some error</p>
-                      </div>
-                    )}
+
                   </div>
                 </ScrollArea>
               )}
