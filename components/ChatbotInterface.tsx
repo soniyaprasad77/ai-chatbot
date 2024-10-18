@@ -11,9 +11,7 @@ import AdminPanel from "./AdminPanel";
 import HistoryTab from "./HistoryTab";
 import { AppDispatch } from "@/store/store";
 import { saveResponse } from "@/store/chatSlice";
-
-const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
-
+import ReactMarkdown from "react-markdown";
 export default function ChatbotInterface() {
   const [questions, setQuestions] = useState<string[]>([]);
   const [result, setResult] = useState<any | null>(null);
@@ -32,16 +30,17 @@ export default function ChatbotInterface() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ questions }),
+
       });
-      const data = await response.json();
+      const data = await response.text();
       console.log(data);
-      if (!response.json()) {
+      if (!data) {
         console.log("Data is empty");
       }
       if (response.ok) {
         setResult(data);
       } else {
-        setError(data.message || "An error occurred during the request");
+        setError("An error occurred during the request");
       }
     } catch (err) {
       setError("An error occurred during the request");
@@ -86,7 +85,7 @@ export default function ChatbotInterface() {
                   <div className='space-y-4'>
                     <div>
                       <h3 className='font-semibold'>Result</h3>
-                      <p>{result.result_text || JSON.stringify(result)}</p>
+                      <ReactMarkdown>{result}</ReactMarkdown>
                     </div>
                     {result.error && (
                       <div className='text-red-500'>

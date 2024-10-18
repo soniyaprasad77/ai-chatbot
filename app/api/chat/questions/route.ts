@@ -1,10 +1,9 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dbConnect from "@/lib/dbConnect";
-import { NextResponse } from "next/server";
-
-const apiKey = process.env.GOOGLE_API_KEY;
+console.log(process.env.GEMINI_API_KEY);
+const apiKey = process.env.GEMINI_API_KEY;
 if (!apiKey) {
-    throw new Error("GOOGLE_API_KEY is not defined");
+    throw new Error("GEMINI_API_KEY is not defined");
 }
 
 const genAI = new GoogleGenerativeAI(apiKey);
