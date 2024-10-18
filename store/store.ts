@@ -3,11 +3,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import chatReducer from "./chatSlice";
+import userReducer from "./userSlice";
 
 export const makeStore = () =>
   configureStore({
     reducer: {
       chat: chatReducer,
+      user: userReducer
     },
   });
 

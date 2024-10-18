@@ -1,27 +1,27 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-
+// import { useSelector } from "react-redux";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
-import { RootState } from "@/store/store";
+// import { RootState } from "@/store/store";
 
 export default function AdminPanel() {
   const [users, setUsers] = useState<{ id: number; name: string }[]>([]);
-  const savedResponses = useSelector(
-    (state: RootState) => state.chat.savedResponses
-  );
+  // const savedResponses = useSelector(
+  //   (state: RootState) => state.chat.savedResponses
+  // );
+
 
   useEffect(() => {
     // In a real application, you would fetch users from your database here
     // For this example, we'll use mock data
-    setUsers([
-      { id: 1, name: "User 1" },
-      { id: 2, name: "User 2" },
-      { id: 3, name: "User 3" },
-    ]);
+    const getData = async () => {
+      const response = await fetch("/api/admin/users");
+      const data = await response.json();
+      setUsers(data.users);
+    }
+    getData();
   }, []);
 
   return (
@@ -48,13 +48,13 @@ export default function AdminPanel() {
         </CardHeader>
         <CardContent>
           <ScrollArea className='h-[200px]'>
-            <ul className='space-y-2'>
+            {/* <ul className='space-y-2'>
               {savedResponses.map((response, index) => (
                 <li key={index} className='p-2 bg-secondary rounded-md'>
-                  <strong>Summary:</strong> {response.summary}
+                  
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </ScrollArea>
         </CardContent>
       </Card>

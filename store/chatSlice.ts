@@ -1,11 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ChatResponse {
-  summary?: string;
-  result_text?: string;
-  result_table_path?: string;
-  result_visualization_path?: string;
-  error?: string;
+  answers: string;
 }
 
 interface ChatState {

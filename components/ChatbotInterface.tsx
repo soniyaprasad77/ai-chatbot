@@ -11,7 +11,7 @@ import HistoryTab from "./HistoryTab";
 // import { AppDispatch } from "@/store/store";
 // import { saveResponse } from "@/store/chatSlice";
 import ReactMarkdown from "react-markdown";
-import isAuth from "./isAuth";
+import IsAuth from "./isAuth";
 
 
 function ChatbotInterface() {
@@ -135,4 +135,4 @@ function ChatbotInterface() {
   );
 }
 
-export default isAuth(ChatbotInterface);
+export default IsAuth(ChatbotInterface);

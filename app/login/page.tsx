@@ -14,12 +14,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { useDispatch } from "react-redux";
+import { login } from "@/store/userSlice";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +35,10 @@ export default function LoginPage() {
     });
 
     if (response.ok) {
-      router.push("/"); // Redirect to home page after successful login
+      const data = await response.json();
+      console.log(data);
+      dispatch(login({user: data.user})); 
+      router.push("/"); 
     } else {
       const data = await response.json();
       setError(data.message || "An error occurred during login");
