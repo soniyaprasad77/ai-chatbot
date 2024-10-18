@@ -1,6 +1,8 @@
 import Chat from "@/models/Chat";
 import { getUserFromToken } from "@/lib/auth";
 import dbConnect from "@/lib/dbConnect";
+export const dynamic = "force-dynamic";
+
 export async function GET() {
     try {
         await dbConnect();
