@@ -1,6 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
 import Chat from "@/models/Chat";
-import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
 
 

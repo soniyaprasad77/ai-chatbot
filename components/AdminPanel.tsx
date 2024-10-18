@@ -7,7 +7,7 @@ import ReactMarkdown from "react-markdown";
 export default function AdminPanel() {
   const [users, setUsers] = useState<{ _id: string; name: string }[]>([]);
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
-  const [userHistory, setUserHistory] = useState<any[]>([]);
+  const [userHistory, setUserHistory] = useState<{ question: string; answer: string; _id: string }[]>([]);
 
   useEffect(() => {
     const getData = async () => {
