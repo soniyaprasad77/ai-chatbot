@@ -29,11 +29,11 @@ export async function POST(req: Request) {
         { status: 401 }
       );
     }
-
+    
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, {
       expiresIn: "1h",
     });
-
+    
     const response = NextResponse.json({ message: "Login successful", token });
     response.cookies.set("token", token, {
       httpOnly: true,

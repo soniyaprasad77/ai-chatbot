@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,7 @@ import { AppDispatch } from "@/store/store";
 import { saveResponse } from "@/store/chatSlice";
 import ReactMarkdown from "react-markdown";
 export default function ChatbotInterface() {
-  const [questions, setQuestions] = useState<string[]>([]);
+  const [questions, setQuestions] = useState<string>("");
   const [result, setResult] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -49,9 +48,23 @@ export default function ChatbotInterface() {
     }
   };
 
-  const handleSaveResponse = () => {
+  const handleSaveResponse = async () => {
     if (result) {
-      dispatch(saveResponse(result));
+      try {
+        const response = await fetch("/api/chat/save", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ question: questions, answer: result }),
+        });
+
+        if (response.ok) {
+          dispatch(saveResponse(result));
+        } else {
+          setError("An error occurred while saving the response");
+        }
+      } catch (err) {
+        setError("An error occurred while saving the response");
+      }
     }
   };
 
@@ -69,9 +82,9 @@ export default function ChatbotInterface() {
               <form onSubmit={handleSubmit} className='flex space-x-2'>
                 <Input
                   type='text'
-                  value={questions.join(", ")}
+                  value={questions}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setQuestions(e.target.value.split(", "))
+                    setQuestions(e.target.value)
                   }
                   placeholder='Ask a question...'
                   className='flex-1'
