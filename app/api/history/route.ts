@@ -1,13 +1,7 @@
 import Chat from "@/models/Chat";
-import dbConnect from "@/lib/dbConnect";
 import { getUserFromToken } from "@/lib/auth";
-export async function GET(req: Request, res: Response) {
-    try {
-        await dbConnect();
-    } catch (error) {
-        console.error("Database connection failed:", error);
-        return new Response("Internal Server Error", { status: 500 });
-    }
+export async function GET() {
+   
 
     try {
         const user = getUserFromToken();

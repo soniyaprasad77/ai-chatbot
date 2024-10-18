@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,16 +8,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import AdminPanel from "./AdminPanel";
 import HistoryTab from "./HistoryTab";
-import { AppDispatch } from "@/store/store";
-import { saveResponse } from "@/store/chatSlice";
+// import { AppDispatch } from "@/store/store";
+// import { saveResponse } from "@/store/chatSlice";
 import ReactMarkdown from "react-markdown";
-export default function ChatbotInterface() {
+import isAuth from "./isAuth";
+
+
+function ChatbotInterface() {
   const [questions, setQuestions] = useState<string>("");
-  const [result, setResult] = useState<any | null>(null);
+  const [result, setResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +32,6 @@ export default function ChatbotInterface() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ questions }),
-
       });
       const data = await response.text();
       console.log(data);
@@ -41,7 +43,7 @@ export default function ChatbotInterface() {
       } else {
         setError("An error occurred during the request");
       }
-    } catch (err) {
+    } catch {
       setError("An error occurred during the request");
     } finally {
       setLoading(false);
@@ -58,11 +60,11 @@ export default function ChatbotInterface() {
         });
 
         if (response.ok) {
-          dispatch(saveResponse(result));
+          // dispatch(saveResponse(result));
         } else {
           setError("An error occurred while saving the response");
         }
-      } catch (err) {
+      } catch {
         setError("An error occurred while saving the response");
       }
     }
@@ -93,6 +95,11 @@ export default function ChatbotInterface() {
                   {loading ? "Sending..." : "Send"}
                 </Button>
               </form>
+              {error && (
+                <div className='text-red-500 mt-4'>
+                  <p>{error}</p>
+                </div>
+              )}
               {result && (
                 <ScrollArea className='h-[400px] mt-4'>
                   <div className='space-y-4'>
@@ -100,10 +107,10 @@ export default function ChatbotInterface() {
                       <h3 className='font-semibold'>Result</h3>
                       <ReactMarkdown>{result}</ReactMarkdown>
                     </div>
-                    {result.error && (
+                    {result && (
                       <div className='text-red-500'>
                         <h3 className='font-semibold'>Error</h3>
-                        <p>{result.error}</p>
+                        <p>some error</p>
                       </div>
                     )}
                   </div>
@@ -127,3 +134,5 @@ export default function ChatbotInterface() {
     </div>
   );
 }
+
+export default isAuth(ChatbotInterface);
