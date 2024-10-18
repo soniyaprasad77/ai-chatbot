@@ -32,6 +32,7 @@ function ChatbotInterface() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ questions }),
+        cache: "no-store",
       });
       const data = await response.text();
       console.log(data);
@@ -57,6 +58,7 @@ function ChatbotInterface() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ question: questions, answer: result }),
+          cache: "no-store",
         });
 
         if (response.ok) {

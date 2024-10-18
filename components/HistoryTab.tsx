@@ -9,7 +9,10 @@ import ReactMarkdown from "react-markdown";
 export default function HistoryTab() {
   const [savedResponses, setSavedResponses] = useState<{ question: string; answer?: string }[]>([]);
   useEffect(() => {
-    fetch("/api/history")
+    fetch("/api/history", {
+      cache: "no-store"
+
+    })
       .then((response) => response.json())
       .then((data) => {
         setSavedResponses(data);

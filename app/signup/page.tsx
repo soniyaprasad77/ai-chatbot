@@ -30,6 +30,7 @@ export default function SignUpPage() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, password }),
+      cache: "no-store",
     });
 
     if (response.ok) {

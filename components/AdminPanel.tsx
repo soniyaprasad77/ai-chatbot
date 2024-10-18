@@ -11,7 +11,14 @@ export default function AdminPanel() {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch("/api/admin/users");
+      const response = await fetch("/api/admin/users", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        cache: "no-store",
+
+      });
       const data = await response.json();
       setUsers(data.users);
     }
@@ -25,7 +32,8 @@ export default function AdminPanel() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
-      }
+      }, 
+      cache: "no-store"
     });
     const data = await response.json();
     setUserHistory(data.chats);
